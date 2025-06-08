@@ -1,4 +1,3 @@
-const pool = require('../config/db');
 const jobModel = require('../models/jobModel');
 
 exports.home = (req, res) => {
@@ -23,10 +22,12 @@ exports.createJob = async (req, res) => {
   const { title, description, price, contact } = req.body;
   try {
     await jobModel.createJob(title, description, price, contact, req.session.userId);
+    req.flash('success', 'Job created successfully!');
     res.redirect('/jobs');
   } catch (err) {
     console.error('Error creating job:', err);
-    res.status(500).send('Server error');
+    req.flash('error', 'Error creating job.');
+    res.redirect('/jobs');
   }
 };
 
@@ -35,24 +36,29 @@ exports.updateJob = async (req, res) => {
   const jobId = parseInt(req.params.id, 10);
 
   if (isNaN(jobId)) {
-    return res.status(400).send('Invalid job ID');
+    req.flash('error', 'Invalid job ID.');
+    return res.redirect('/jobs');
   }
 
   try {
     await jobModel.updateJob(jobId, title, description, price, contact, req.session.userId);
+    req.flash('success', 'Job updated successfully!');
     res.redirect('/jobs');
   } catch (err) {
     console.error('Error updating job:', err);
-    res.status(500).send('Server error');
+    req.flash('error', 'Error updating job.');
+    res.redirect('/jobs');
   }
 };
 
 exports.deleteJob = async (req, res) => {
   try {
     await jobModel.deleteJob(req.params.id, req.session.userId);
+    req.flash('success', 'Job deleted successfully!');
     res.redirect('/jobs');
   } catch (err) {
     console.error('Error deleting job:', err);
-    res.status(500).send('Server error');
+    req.flash('error', 'Error deleting job.');
+    res.redirect('/jobs');
   }
 };

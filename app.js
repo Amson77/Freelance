@@ -23,7 +23,7 @@ app.use(session({
 }));
 app.use(flash());
 
-// Initial log: BEFORE override
+// Middleware to log requests
 app.use((req, res, next) => {
   console.log('➡️ HTTP Method (before override):', req.method, '| Path:', req.path);
   next();
@@ -32,15 +32,16 @@ app.use((req, res, next) => {
 // Method override for PUT and DELETE
 app.use(methodOverride('_method'));
 
-// Secondary log: AFTER override
+// Middleware to log after override
 app.use((req, res, next) => {
   console.log('✅ After override:', req.method, '| Path:', req.path);
   next();
 });
 
-// Middleware to pass user ID to views
+// Middleware to pass user ID and flash to views
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.userId;
+  res.locals.flash = req.flash();
   next();
 });
 

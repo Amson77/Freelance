@@ -15,8 +15,12 @@
     <div class="auth-box">
       <h2>Login</h2>
 
-      <% if (error) { %>
-        <div class="error-message"><%= error %></div>
+      <% if (flash && flash.error && flash.error.length) { %>
+        <div class="error-message"><%= flash.error[0] %></div>
+      <% } %>
+
+      <% if (flash && flash.success && flash.success.length) { %>
+        <div class="success-message"><%= flash.success[0] %></div>
       <% } %>
 
       <form method="POST">
@@ -28,8 +32,9 @@
 
         <input type="submit" value="Login" class="btn-primary" />
       </form>
+
       <p class="auth-link">
-        Don't have an account? <a href="/signup">Sign Up</a>
+        Don’t have an account? <a href="/signup">Sign Up</a>
       </p>
     </div>
   </main>

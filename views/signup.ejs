@@ -15,19 +15,23 @@
     <div class="auth-box">
       <h2>Sign Up</h2>
 
-      <% if (error) { %>
-        <div class="error-message"><%= error %></div>
+      <% if (flash && flash.error && flash.error.length) { %>
+        <div class="error-message"><%= flash.error[0] %></div>
+      <% } %>
+
+      <% if (flash && flash.success && flash.success.length) { %>
+        <div class="success-message"><%= flash.success[0] %></div>
       <% } %>
 
       <form method="POST">
         <label>Full Name</label>
-        <input type="text" name="fullName" placeholder="Enter your full name" required />
+        <input type="text" name="fullName" placeholder="Enter your full name" required pattern="[A-Za-z\s]+" title="Alphabets only" />
 
         <label>Email Address</label>
         <input type="email" name="email" placeholder="Enter your email" required />
 
         <label>Phone Number</label>
-        <input type="text" name="phone" placeholder="Enter your phone number" required />
+        <input type="text" name="phone" placeholder="Enter your phone number" required pattern="[0-9]+" title="Numbers only" />
 
         <label>Password</label>
         <input type="password" name="password" placeholder="Enter your password" required />
