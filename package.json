@@ -1,8 +1,11 @@
 {
   "name": "freelance",
   "version": "1.0.0",
-  "description": "",
+  "description": "A freelance platform for students in Bhutan",
   "main": "app.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
