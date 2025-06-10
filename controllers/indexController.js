@@ -15,7 +15,8 @@ exports.showJobs = async (req, res) => {
 };
 
 exports.newJobPage = (req, res) => {
-  res.render('new_job');
+  // Pass default empty arrays for error/success messages
+  res.render('new_job', { error: [], success: [] });
 };
 
 exports.createJob = async (req, res) => {
@@ -27,7 +28,7 @@ exports.createJob = async (req, res) => {
   } catch (err) {
     console.error('Error creating job:', err);
     req.flash('error', 'Error creating job.');
-    res.redirect('/jobs');
+    res.redirect('/jobs/new');
   }
 };
 
